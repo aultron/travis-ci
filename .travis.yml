@@ -1,0 +1,17 @@
+language: go
+
+go:
+  - 1.13.x
+  - 1.15.x
+
+env:
+  global:
+    - GO111MODULE=on
+jobs:
+  include:
+    - stage: build
+      script:
+        - CGO_ENABLED=0 go build -ldflags "-X github.com/aultron/travis-ci.GitHash=`git rev-parse HEAD`" .
+    - stage: test
+      script:
+        -  go test -cover ./
